@@ -1,3 +1,22 @@
+document.getElementById('fileInput').addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const gifContainer = document.getElementById('gifContainer');
+    
+    if (file && file.type === 'image/gif') {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const gifImage = document.createElement('img');
+            gifImage.src = e.target.result;
+            gifImage.style.maxWidth = '100%';
+            gifContainer.innerHTML = '';
+            gifContainer.appendChild(gifImage);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        gifContainer.innerHTML = 'Выберите правильный GIF файл';
+    }
+});
+
 document.getElementById('processButton').addEventListener('click', async () => {
     const inputText = document.getElementById('inputText').value;
     const resultDiv = document.getElementById('result');
@@ -8,7 +27,6 @@ document.getElementById('processButton').addEventListener('click', async () => {
     }
 
     // Placeholder for actual neural network processing
-    // This is where you would integrate TensorFlow.js or similar library
     resultDiv.textContent = 'Обработка текста: ' + inputText;
 
     // Example using a simple LSTM model with TensorFlow.js
